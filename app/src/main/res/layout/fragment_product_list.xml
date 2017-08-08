@@ -4,10 +4,10 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:padding="@dimen/margin_padding_tiny"
-    tools:context=".ui.customerlist.CustomerListFragment">
+    tools:context=".ui.productlist.ProductListFragment">
 
     <android.support.v7.widget.RecyclerView
-        android:id="@+id/customer_list_recyclerView"
+        android:id="@+id/product_list_recyclerView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@android:color/transparent"
@@ -20,7 +20,7 @@
         android:fontFamily="sans-serif-condensed"
         android:gravity="center"
         android:padding="@dimen/margin_padding_normal"
-        android:text="@string/no_customer_found"
+        android:text="@string/no_product_found"
         android:textColor="@color/primary"
         android:textStyle="italic"
         android:visibility="gone" />
