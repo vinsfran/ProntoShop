@@ -17,7 +17,7 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import py.com.fuentepy.prontoshop.R;
-import py.com.fuentepy.prontoshop.core.listeners.OnProductSelectedListener;
+import py.com.fuentepy.prontoshop.core.listeners.OnCustomerSelectedListener;
 import py.com.fuentepy.prontoshop.model.Customer;
 
 /**
@@ -29,12 +29,12 @@ public class CustomerListAdapter extends RecyclerView.Adapter<CustomerListAdapte
     private final Context mContext;
     private boolean shouldHighlightSelectedCustomer = false;
     private int selectedPosition = 0;
-    private final OnProductSelectedListener mListener;
+    private final OnCustomerSelectedListener mListener;
 
-    public CustomerListAdapter(List<Customer> mCustomers, Context mContext, OnProductSelectedListener mListener) {
+    public CustomerListAdapter(List<Customer> mCustomers, Context mContext, OnCustomerSelectedListener listener) {
         this.mCustomers = mCustomers;
         this.mContext = mContext;
-        this.mListener = mListener;
+        this.mListener = listener;
     }
 
     @Override
@@ -92,11 +92,18 @@ public class CustomerListAdapter extends RecyclerView.Adapter<CustomerListAdapte
 
         @Override
         public void onClick(View view) {
+            shouldHighlightSelectedCustomer = true;
+            selectedPosition = getLayoutPosition();
+            Customer selectedCustomer = mCustomers.get(selectedPosition);
+            mListener.onSelectCustomer(selectedCustomer);
+            notifyDataSetChanged();
         }
 
         @Override
         public boolean onLongClick(View view) {
-            return false;
+            Customer selectedCustomer = mCustomers.get(selectedPosition);
+            mListener.onLongClickCustomer(selectedCustomer);
+            return true;
         }
     }
 }
