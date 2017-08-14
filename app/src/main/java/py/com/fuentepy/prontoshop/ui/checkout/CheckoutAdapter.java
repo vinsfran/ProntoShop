@@ -22,7 +22,6 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import py.com.fuentepy.prontoshop.R;
 import py.com.fuentepy.prontoshop.core.listeners.CarActionsListener;
-import py.com.fuentepy.prontoshop.model.Customer;
 import py.com.fuentepy.prontoshop.model.LineItem;
 import py.com.fuentepy.prontoshop.util.Formatter;
 

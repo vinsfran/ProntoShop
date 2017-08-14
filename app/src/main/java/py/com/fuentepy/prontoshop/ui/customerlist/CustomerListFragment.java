@@ -27,7 +27,7 @@ public class CustomerListFragment extends Fragment implements OnCustomerSelected
     private View mRootView;
     private CustomerListAdapter mAdapter;
 
-    @BindView(R.id.customer_list_recyclerView)
+    @BindView(R.id.customer_list_recycler_view)
     RecyclerView mRecyclerView;
     @BindView(R.id.empty_text)
     TextView mEmptyTextView;

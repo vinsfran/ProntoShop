@@ -28,7 +28,7 @@ public class ProductListFragment extends Fragment implements OnProductSelectedLi
     private View mRootView;
     private ProductListAdapter mAdapter;
 
-    @BindView(R.id.product_list_recyclerView)
+    @BindView(R.id.product_list_recycler_view)
     RecyclerView mRecyclerView;
     @BindView(R.id.empty_text)
     TextView mEmptyText;

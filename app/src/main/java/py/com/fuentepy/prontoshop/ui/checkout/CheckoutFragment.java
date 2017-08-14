@@ -24,18 +24,27 @@ import py.com.fuentepy.prontoshop.model.LineItem;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class CheckoutFragment extends Fragment implements CarActionsListener{
+public class CheckoutFragment extends Fragment implements CarActionsListener {
     private View mRootView;
     private CheckoutAdapter mAdapter;
 
-    @BindView(R.id.checkout_list_recyclerView) RecyclerView mRecyclerView;
-    @BindView(R.id.empty_text) TextView mEmptyTextView;
-    @BindView(R.id.clear_cart_button) Button mClearButton;
-    @BindView(R.id.checkout_cart_button) Button mCheckoutButton;
-    @BindView(R.id.text_view_sub_total) TextView mSubTotalTextView;
-    @BindView(R.id.text_view_total) TextView mTotalTextView;
-    @BindView(R.id.text_view_tax) TextView mTotalTaxValue;
-    @BindView(R.id.radio_group_payment_type) RadioGroup mRadioGroup;
+    @BindView(R.id.checkout_list_recycler_view)
+    RecyclerView mRecyclerView;
+    @BindView(R.id.empty_text)
+    TextView mEmptyTextView;
+    @BindView(R.id.clear_cart_button)
+    Button mClearButton;
+    @BindView(R.id.checkout_cart_button)
+    Button mCheckoutButton;
+    @BindView(R.id.text_view_sub_total)
+    TextView mSubTotalTextView;
+    @BindView(R.id.text_view_total)
+    TextView mTotalTextView;
+    @BindView(R.id.text_view_tax)
+    TextView mTotalTaxValue;
+    @BindView(R.id.radio_group_payment_type)
+    RadioGroup mRadioGroup;
+
 
     public CheckoutFragment() {
         // Required empty public constructor
@@ -54,9 +63,9 @@ public class CheckoutFragment extends Fragment implements CarActionsListener{
         mAdapter = new CheckoutAdapter(tempLineItems, getActivity(), this);
         mRecyclerView.setLayoutManager(layoutManager);
         mRecyclerView.setAdapter(mAdapter);
-        if(tempLineItems.size() < 1){
+        if (tempLineItems.size() < 1) {
             showEmptyTextMessage();
-        }else{
+        } else {
             hideEmptyTextMessage();
         }
         return mRootView;

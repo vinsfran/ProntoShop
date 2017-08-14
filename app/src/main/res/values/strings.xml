@@ -20,4 +20,6 @@
     <string name="qty">qty</string>
     <string name="delete">DELETE</string>
     <string name="dialog_title">Title</string>
+    <string name="no_item_found">No item found in the card</string>
+    <string name="customer_name">Customer Name</string>
 </resources>

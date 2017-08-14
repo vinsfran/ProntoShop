@@ -1,17 +1,22 @@
 package py.com.fuentepy.prontoshop.common;
 
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentTransaction;
+import android.support.design.widget.TabLayout;
+import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
 import py.com.fuentepy.prontoshop.R;
-import py.com.fuentepy.prontoshop.ui.checkout.CheckoutFragment;
-import py.com.fuentepy.prontoshop.ui.customerlist.CustomerListFragment;
-import py.com.fuentepy.prontoshop.ui.productlist.ProductListFragment;
 
 public class MainActivity extends AppCompatActivity {
+
+    @BindView(R.id.view_pager)
+    ViewPager mViewPager;
+
+    @BindView(R.id.tabs)
+    TabLayout mTabLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -19,18 +24,14 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
-        openFragment(new CheckoutFragment(), "Cart");
+        ButterKnife.bind(this);
+        setupViewPager();
     }
 
-    private void openFragment(Fragment fragment, String title) {
-        getSupportFragmentManager()
-                .beginTransaction()
-                .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
-                .replace(R.id.container, fragment)
-                .addToBackStack(null)
-                .commit();
-        getSupportActionBar().setTitle(title);
+    private void setupViewPager() {
+        ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
+        mViewPager.setAdapter(adapter);
+        mTabLayout.setupWithViewPager(mViewPager);
     }
 
 }
