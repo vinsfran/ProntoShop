@@ -10,11 +10,18 @@ import py.com.fuentepy.prontoshop.model.LineItem;
  */
 public interface ShoppingCartContract {
     void addItemToCart(LineItem item);
+
     void removeItemFromCart(LineItem item);
+
     void clearAllItemFromCart();
+
     List<LineItem> getShoppingCart();
+
     void setCustomer(Customer customer);
+
     void updateItemQty(LineItem item, int qty);
+
     Customer getSelectedCustomer();
+
     void completeCheckout();
 }
