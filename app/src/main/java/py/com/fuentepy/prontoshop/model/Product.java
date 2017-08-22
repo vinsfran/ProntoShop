@@ -7,11 +7,11 @@ public class Product {
 
     private long id;
     private String productName;
-    private String descrption;
+    private String description;
     private String promoMessage;
     private double salePrice;
     private double purchasePrice;
-    private String imgePath;
+    private String imagePath;
     private long categoryId;
     private String categoryName;
     private long dateAdded;
@@ -22,11 +22,11 @@ public class Product {
     public Product(Product product){
         this.id = product.getId();
         this.productName = product.getProductName();
-        this.descrption = product.getDescrption();
+        this.description = product.getDescription();
         this.promoMessage = product.getPromoMessage();
         this.salePrice = product.getSalePrice();
         this.purchasePrice = product.getPurchasePrice();
-        this.imgePath = product.getImgePath();
+        this.imagePath = product.getImagePath();
         this.categoryId = product.getCategoryId();
         this.categoryName = product.getCategoryName();
         this.dateAdded = product.getDateAdded();
@@ -49,12 +49,12 @@ public class Product {
         this.productName = productName;
     }
 
-    public String getDescrption() {
-        return descrption;
+    public String getDescription() {
+        return description;
     }
 
-    public void setDescrption(String descrption) {
-        this.descrption = descrption;
+    public void setDescription(String description) {
+        this.description = description;
     }
 
     public String getPromoMessage() {
@@ -81,12 +81,12 @@ public class Product {
         this.purchasePrice = purchasePrice;
     }
 
-    public String getImgePath() {
-        return imgePath;
+    public String getImagePath() {
+        return imagePath;
     }
 
-    public void setImgePath(String imgePath) {
-        this.imgePath = imgePath;
+    public void setImagePath(String imagePath) {
+        this.imagePath = imagePath;
     }
 
     public long getCategoryId() {

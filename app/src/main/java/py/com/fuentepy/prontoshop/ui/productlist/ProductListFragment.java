@@ -10,6 +10,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -23,10 +24,12 @@ import py.com.fuentepy.prontoshop.model.Product;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class ProductListFragment extends Fragment implements OnProductSelectedListener{
+public class ProductListFragment extends Fragment
+        implements OnProductSelectedListener, ProductListContract.View{
 
     private View mRootView;
     private ProductListAdapter mAdapter;
+    private ProductListContract.Actions mPresenter;
 
     @BindView(R.id.product_list_recycler_view)
     RecyclerView mRecyclerView;
@@ -46,6 +49,7 @@ public class ProductListFragment extends Fragment implements OnProductSelectedLi
         // Inflate the layout for this fragment
         mRootView = inflater.inflate(R.layout.fragment_product_list, container, false);
         ButterKnife.bind(this, mRootView);
+        mPresenter = new ProductPresenter(this);
 
         //setup Adapter
         List<Product> tempProducts = new ArrayList<>();
@@ -53,22 +57,14 @@ public class ProductListFragment extends Fragment implements OnProductSelectedLi
         mAdapter = new ProductListAdapter(tempProducts, getActivity(), this);
         mRecyclerView.setLayoutManager(layoutManager);
         mRecyclerView.setAdapter(mAdapter);
-        if(tempProducts.size() < 1){
-            showEmptyTextMessage();
-        }else{
-            hideEmptyTextMessage();
-        }
+
         return mRootView;
     }
 
-    private void hideEmptyTextMessage() {
-        mRecyclerView.setVisibility(View.VISIBLE);
-        mEmptyText.setVisibility(View.GONE);
-    }
-
-    private void showEmptyTextMessage() {
-        mRecyclerView.setVisibility(View.GONE);
-        mEmptyText.setVisibility(View.VISIBLE);
+    @Override
+    public void onResume() {
+        super.onResume();
+        mPresenter.loadProducts();
     }
 
     @Override
@@ -79,5 +75,49 @@ public class ProductListFragment extends Fragment implements OnProductSelectedLi
     @Override
     public void onLongClickProduct(Product clickedProduct) {
 
+    }
+
+    @Override
+    public void showProducts(List<Product> products) {
+        //this is where we show the products
+        mAdapter.replaceData(products);
+    }
+
+    @Override
+    public void showAddProductForm() {
+        //show a dialog to add Product
+
+    }
+
+    @Override
+    public void showEditProductForm(Product product) {
+        //show a dialog to edit Product
+    }
+
+    @Override
+    public void showDeleteProductPrompt(Product product) {
+        //show alert dialog
+    }
+
+    @Override
+    public void showGoogleSearch(Product product) {
+        //show google search
+    }
+
+    @Override
+    public void showEmptyText() {
+        mRecyclerView.setVisibility(View.GONE);
+        mEmptyText.setVisibility(View.VISIBLE);
+    }
+
+    @Override
+    public void hideEmptyText() {
+        mRecyclerView.setVisibility(View.VISIBLE);
+        mEmptyText.setVisibility(View.GONE);
+    }
+
+    @Override
+    public void showMessage(String message) {
+        Toast.makeText(getActivity(), message, Toast.LENGTH_SHORT).show();
     }
 }

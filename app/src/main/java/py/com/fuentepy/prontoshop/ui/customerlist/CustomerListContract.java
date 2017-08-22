@@ -2,6 +2,7 @@ package py.com.fuentepy.prontoshop.ui.customerlist;
 
 import java.util.List;
 
+import py.com.fuentepy.prontoshop.core.listeners.OnDatabaseOperationCompleteListener;
 import py.com.fuentepy.prontoshop.model.Customer;
 
 /**
@@ -40,7 +41,7 @@ public interface CustomerListContract {
 
         void deleteCustomer(Customer customer);
 
-        void onEditCustomerButtonClicked();
+        void onEditCustomerButtonClicked(Customer customer);
 
         void updateCustomer(Customer customer);
     }
@@ -50,10 +51,10 @@ public interface CustomerListContract {
 
         Customer getCustomerById(Long id);
 
-        void onDeleteCustomer(Customer customer);
+        void onDeleteCustomer(Customer customer, OnDatabaseOperationCompleteListener listener);
 
-        void addCustomer(Customer customer);
+        void addCustomer(Customer customer, OnDatabaseOperationCompleteListener listener);
 
-        void updatedCustomer(Customer customer);
+        void updatedCustomer(Customer customer, OnDatabaseOperationCompleteListener listener);
     }
 }

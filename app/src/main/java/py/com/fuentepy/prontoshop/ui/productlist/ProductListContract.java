@@ -2,6 +2,7 @@ package py.com.fuentepy.prontoshop.ui.productlist;
 
 import java.util.List;
 
+import py.com.fuentepy.prontoshop.core.listeners.OnDatabaseOperationCompleteListener;
 import py.com.fuentepy.prontoshop.model.Category;
 import py.com.fuentepy.prontoshop.model.Product;
 
@@ -33,9 +34,9 @@ public interface ProductListContract {
 
         void onAddProductButtonClicked();
 
-        void onAddToCrtButtonClicked();
+        void onAddToCartButtonClicked(Product product);
 
-        Product getProduct();
+        Product getProduct(long id);
 
         void addProduct(Product product);
 
@@ -55,11 +56,11 @@ public interface ProductListContract {
 
         Product getProductById(Long id);
 
-        void deleteProduct(Product product);
+        void deleteProduct(Product product, OnDatabaseOperationCompleteListener listener);
 
-        void addProduct(Product product);
+        void addProduct(Product product, OnDatabaseOperationCompleteListener listener);
 
-        void updateProduct(Product product);
+        void updateProduct(Product product, OnDatabaseOperationCompleteListener listener);
 
         List<Category> getAllCategories();
     }

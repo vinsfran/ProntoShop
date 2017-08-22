@@ -35,6 +35,11 @@ public class ProductListAdapter extends RecyclerView.Adapter<ProductListAdapter.
         this.mListener = mListener;
     }
 
+    public void replaceData(List<Product> products) {
+        mProducts = products;
+        notifyDataSetChanged();
+    }
+
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View rowView = LayoutInflater.from(parent.getContext()).inflate(R.layout.row_product_list, parent, false);
@@ -47,14 +52,14 @@ public class ProductListAdapter extends RecyclerView.Adapter<ProductListAdapter.
         if (mProducts != null) {
             Product product = mProducts.get(position);
             Picasso.with(mContext)
-                    .load(product.getImgePath())
+                    .load(product.getImagePath())
                     .fit()
                     .placeholder(R.drawable.default_image)
                     .into(holder.productImage);
             holder.productName.setText(product.getProductName());
             holder.category.setText(product.getCategoryName());
             holder.productPrice.setText(Formatter.formatCurrency(product.getSalePrice()));
-            String productDescription = product.getDescrption();
+            String productDescription = product.getDescription();
             String shortDescription = productDescription.substring(0, Math.min(productDescription.length(), 70));
             holder.description.setText(shortDescription);
         }
@@ -69,14 +74,20 @@ public class ProductListAdapter extends RecyclerView.Adapter<ProductListAdapter.
         }
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener, View.OnLongClickListener{
+    public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener, View.OnLongClickListener {
 
-        @BindView(R.id.product_image) ImageView productImage;
-        @BindView(R.id.text_view_product_name) TextView productName;
-        @BindView(R.id.text_view_product_category) TextView category;
-        @BindView(R.id.text_view_product_description) TextView description;
-        @BindView(R.id.image_view_add_to_cart_button) ImageView addToCartButton;
-        @BindView(R.id.text_view_product_price) TextView productPrice;
+        @BindView(R.id.product_image)
+        ImageView productImage;
+        @BindView(R.id.text_view_product_name)
+        TextView productName;
+        @BindView(R.id.text_view_product_category)
+        TextView category;
+        @BindView(R.id.text_view_product_description)
+        TextView description;
+        @BindView(R.id.image_view_add_to_cart_button)
+        ImageView addToCartButton;
+        @BindView(R.id.text_view_product_price)
+        TextView productPrice;
 
         public ViewHolder(View itemView) {
             super(itemView);

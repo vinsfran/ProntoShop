@@ -22,7 +22,7 @@
             android:textSize="@dimen/text_size_normal" />
 
         <TextView
-            android:id="@+id/textview_product_name"
+            android:id="@+id/text_view_product_name"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
