@@ -75,7 +75,7 @@ public class CheckoutAdapter extends RecyclerView.Adapter<CheckoutAdapter.ViewHo
         ImageView productImage;
         @BindView(R.id.text_view_product_name)
         TextView productName;
-        @BindView(R.id.text_view_product_price)
+        @BindView(R.id.text_view_price)
         TextView price;
         @BindView(R.id.edit_text_qty)
         EditText qtyEditText;

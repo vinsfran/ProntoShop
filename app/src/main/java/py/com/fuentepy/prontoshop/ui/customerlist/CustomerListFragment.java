@@ -23,9 +23,12 @@ import py.com.fuentepy.prontoshop.model.Customer;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class CustomerListFragment extends Fragment implements OnCustomerSelectedListener{
+public class CustomerListFragment extends Fragment
+        implements OnCustomerSelectedListener, CustomerListContract.View {
+
     private View mRootView;
     private CustomerListAdapter mAdapter;
+    private CustomerListContract.Actions mPresenter;
 
     @BindView(R.id.customer_list_recycler_view)
     RecyclerView mRecyclerView;
@@ -44,6 +47,7 @@ public class CustomerListFragment extends Fragment implements OnCustomerSelected
         // Inflate the layout for this fragment
         mRootView = inflater.inflate(R.layout.fragment_customer_list, container, false);
         ButterKnife.bind(this, mRootView);
+        mPresenter = new CustomerPresenter(this);
 
         //setup Adapter
         List<Customer> tempCustomers = new ArrayList<>();
@@ -51,22 +55,14 @@ public class CustomerListFragment extends Fragment implements OnCustomerSelected
         mAdapter = new CustomerListAdapter(tempCustomers, getActivity(), this);
         mRecyclerView.setLayoutManager(layoutManager);
         mRecyclerView.setAdapter(mAdapter);
-        if(tempCustomers.size() < 1){
-            showEmptyTextMessage();
-        }else{
-            hideEmptyTextMessage();
-        }
+
         return mRootView;
     }
 
-    private void hideEmptyTextMessage() {
-        mRecyclerView.setVisibility(View.VISIBLE);
-        mEmptyTextView.setVisibility(View.GONE);
-    }
-
-    private void showEmptyTextMessage() {
-        mRecyclerView.setVisibility(View.GONE);
-        mEmptyTextView.setVisibility(View.VISIBLE);
+    @Override
+    public void onResume() {
+        super.onResume();
+        mPresenter.loadCustomer();
     }
 
     @Override
@@ -76,6 +72,44 @@ public class CustomerListFragment extends Fragment implements OnCustomerSelected
 
     @Override
     public void onLongClickCustomer(Customer customer) {
+
+    }
+
+    @Override
+    public void showCustomers(List<Customer> customers) {
+        //update the adapter with the returned list of customers
+        mAdapter.replaceData(customers);
+    }
+
+    @Override
+    public void showAddCustomerForm() {
+
+    }
+
+    @Override
+    public void showDeleteCustomerPrompt(Customer customer) {
+
+    }
+
+    @Override
+    public void showEditCustomerForm(Customer customer) {
+
+    }
+
+    @Override
+    public void showEmptyText() {
+        mRecyclerView.setVisibility(View.GONE);
+        mEmptyTextView.setVisibility(View.VISIBLE);
+    }
+
+    @Override
+    public void hideEmptyText() {
+        mRecyclerView.setVisibility(View.VISIBLE);
+        mEmptyTextView.setVisibility(View.GONE);
+    }
+
+    @Override
+    public void showMessage(String message) {
 
     }
 }

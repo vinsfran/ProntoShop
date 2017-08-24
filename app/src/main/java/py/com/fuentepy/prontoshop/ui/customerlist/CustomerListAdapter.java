@@ -74,6 +74,11 @@ public class CustomerListAdapter extends RecyclerView.Adapter<CustomerListAdapte
         }
     }
 
+    public void replaceData(List<Customer> customers){
+        mCustomers = customers;
+        notifyDataSetChanged();
+    }
+
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener, View.OnLongClickListener {
 
         @BindView(R.id.image_view_customer_head_shot)

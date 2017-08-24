@@ -1,21 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:layout_height="wrap_content">
 
     <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/image_view_customer_head_shot"
-        android:layout_width="@dimen/customer_image_size"
-        android:layout_height="@dimen/customer_image_size"
-        android:layout_margin="@dimen/margin_padding_small" />
+        android:layout_width="70dp"
+        android:layout_height="70dp"
+        android:layout_centerVertical="true"
+        android:layout_margin="10dp" />
 
     <LinearLayout
+        android:id="@+id/linear_layout_customer_name"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_margin="10dp"
         android:layout_weight="1"
-        android:layout_margin="@dimen/margin_padding_small"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:paddingTop="@dimen/margin_padding_normal">
 
         <TextView
             android:id="@+id/text_view_customer_name"
@@ -26,7 +29,6 @@
             android:id="@+id/text_view_customer_email"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
-
     </LinearLayout>
 
 </LinearLayout>

@@ -86,7 +86,7 @@ public class ProductListAdapter extends RecyclerView.Adapter<ProductListAdapter.
         TextView description;
         @BindView(R.id.image_view_add_to_cart_button)
         ImageView addToCartButton;
-        @BindView(R.id.text_view_product_price)
+        @BindView(R.id.textview_product_price)
         TextView productPrice;
 
         public ViewHolder(View itemView) {
