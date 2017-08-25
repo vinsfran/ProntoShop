@@ -7,7 +7,7 @@ import javax.inject.Inject;
 import py.com.fuentepy.prontoshop.core.ProntoShopApplication;
 import py.com.fuentepy.prontoshop.core.listeners.OnDatabaseOperationCompleteListener;
 import py.com.fuentepy.prontoshop.model.Customer;
-import py.com.fuentepy.prontoshop.model.Transaction;
+import py.com.fuentepy.prontoshop.model.SalesTransaction;
 import py.com.fuentepy.prontoshop.ui.customerlist.CustomerListContract;
 
 /**
@@ -27,7 +27,7 @@ public class TransactionPresenter implements TransactionContract.Actions, OnData
 
     @Override
     public void loadTransactions() {
-        List<Transaction> transactions = mRepository.getAllTransactions();
+        List<SalesTransaction> transactions = mRepository.getAllTransactions();
         if (transactions != null && transactions.size() > 0) {
             mView.hideEmptyText();
             mView.showTransaction(transactions);
@@ -38,17 +38,17 @@ public class TransactionPresenter implements TransactionContract.Actions, OnData
     }
 
     @Override
-    public void onDeleteItemButtonClicked(Transaction transaction) {
+    public void onDeleteItemButtonClicked(SalesTransaction transaction) {
         mView.showConfirmDeletePrompty(transaction);
     }
 
     @Override
-    public void editTransaction(Transaction transaction) {
+    public void editTransaction(SalesTransaction transaction) {
         mRepository.updateTransaction(transaction, this);
     }
 
     @Override
-    public void deleteTransaction(Transaction transaction) {
+    public void deleteTransaction(SalesTransaction transaction) {
         mRepository.deleteTransaction(transaction.getId(), this);
     }
 

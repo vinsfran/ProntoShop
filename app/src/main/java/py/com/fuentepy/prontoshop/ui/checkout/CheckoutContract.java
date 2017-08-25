@@ -5,7 +5,7 @@ import java.util.List;
 import py.com.fuentepy.prontoshop.core.listeners.OnDatabaseOperationCompleteListener;
 import py.com.fuentepy.prontoshop.model.LineItem;
 import py.com.fuentepy.prontoshop.model.Product;
-import py.com.fuentepy.prontoshop.model.Transaction;
+import py.com.fuentepy.prontoshop.model.SalesTransaction;
 
 
 /**
@@ -54,8 +54,8 @@ public interface CheckoutContract {
     public interface Repository {
         List<LineItem> getAllLineItems();
 
-        void saveTransaction(Transaction transaction, OnDatabaseOperationCompleteListener listener);
+        void saveTransaction(SalesTransaction transaction, OnDatabaseOperationCompleteListener listener);
 
-        void updateTransaction(Transaction transaction, OnDatabaseOperationCompleteListener listener);
+        void updateTransaction(SalesTransaction transaction, OnDatabaseOperationCompleteListener listener);
     }
 }

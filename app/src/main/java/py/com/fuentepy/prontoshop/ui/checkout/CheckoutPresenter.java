@@ -5,10 +5,9 @@ import java.util.List;
 import javax.inject.Inject;
 
 import py.com.fuentepy.prontoshop.common.ShoppingCart;
-import py.com.fuentepy.prontoshop.core.ProntoShopApplication;
 import py.com.fuentepy.prontoshop.core.listeners.OnDatabaseOperationCompleteListener;
 import py.com.fuentepy.prontoshop.model.LineItem;
-import py.com.fuentepy.prontoshop.model.Transaction;
+import py.com.fuentepy.prontoshop.model.SalesTransaction;
 
 /**
  * Created by vinsfran on 22/08/17.
@@ -78,7 +77,7 @@ public class CheckoutPresenter implements CheckoutContract.Actions, OnDatabaseOp
         if (mCart.getSelectedCustomer() == null || mCart.getSelectedCustomer().getId() == 0) {
             mView.showMessage("No Customer is selected");
         }
-        Transaction transaction = new Transaction();
+        SalesTransaction transaction = new SalesTransaction();
         transaction.setCustomerId(mCart.getSelectedCustomer().getId());
         transaction.setLineItems(mCart.getShoppingCart());
         transaction.setTaxAmount(tax);

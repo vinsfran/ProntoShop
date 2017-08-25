@@ -9,7 +9,7 @@ import java.util.List;
 /**
  * Created by vinsfran on 08/08/17.
  */
-public class Transaction {
+public class SalesTransaction {
 
     private long id;
     private long customerId;
@@ -28,7 +28,7 @@ public class Transaction {
     //string before it can be saved to the database
     private String jsonLineItems;
 
-    public Transaction() {
+    public SalesTransaction() {
     }
 
     public long getId() {
