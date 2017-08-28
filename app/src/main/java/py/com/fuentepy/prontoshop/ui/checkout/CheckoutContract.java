@@ -1,61 +1,48 @@
 package py.com.fuentepy.prontoshop.ui.checkout;
 
+import py.com.fuentepy.prontoshop.core.listeners.OnDatabaseOperationCompleteListener;
+import py.com.fuentepy.prontoshop.models.LineItem;
+
 import java.util.List;
 
-import py.com.fuentepy.prontoshop.core.listeners.OnDatabaseOperationCompleteListener;
-import py.com.fuentepy.prontoshop.model.LineItem;
-import py.com.fuentepy.prontoshop.model.Product;
-import py.com.fuentepy.prontoshop.model.SalesTransaction;
-
-
 /**
- * Created by vinsfran on 21/08/17.
+ * Created by vinsfran on 28/08/2017.
  */
-public interface CheckoutContract {
-
-    public interface View {
-        void showLineItem(List<LineItem> items);
-
+public class CheckoutContract {
+    public interface View{
+        void showLineItem(List<LineItem> lineItems);
         void showEmptyText();
-
-        void showCatTotals(double tax, double subTotal, double total);
-
+        void showCartTotals(double tax, double subtotal, double total);
         void showConfirmCheckout();
-
         void showConfirmClearCart();
-
-        void hideText();
-
-        void showDeleteProductPrompt(Product product);
-
+        void hideEmptyText();
         void showMessage(String message);
+
     }
 
-    public interface Actions {
+    public interface Actions{
         void loadLineItems();
-
         void onCheckoutButtonClicked();
-
         void onDeleteItemButtonClicked(LineItem item);
-
         void checkout();
-
         void onClearButtonClicked();
-
         void clearShoppingCart();
-
         void setPaymentType(String paymentType);
-
-        void markAsPaid(boolean paid);
-
+        void markAsPaid(boolean isPaid);
         void onItemQuantityChanged(LineItem item, int qty);
     }
 
-    public interface Repository {
-        List<LineItem> getAllLineItems();
+    public interface Repository{
+        List<LineItem> getAllLineItemsInATransaction(long transactionId);
+        long saveLineItem(LineItem lineItem, OnDatabaseOperationCompleteListener listener);
+        void updateLineItem(LineItem lineItem, OnDatabaseOperationCompleteListener listener);
+        LineItem getLineItemById(long id);
+        void deleteLineItem(long id, OnDatabaseOperationCompleteListener listener);
 
-        void saveTransaction(SalesTransaction transaction, OnDatabaseOperationCompleteListener listener);
 
-        void updateTransaction(SalesTransaction transaction, OnDatabaseOperationCompleteListener listener);
     }
+
+
+
+
 }

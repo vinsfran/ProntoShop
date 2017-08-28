@@ -3,14 +3,13 @@ package py.com.fuentepy.prontoshop.data;
 import java.util.ArrayList;
 import java.util.List;
 
-import py.com.fuentepy.prontoshop.model.Customer;
+import py.com.fuentepy.prontoshop.models.Customer;
 
 /**
- * Created by vinsfran on 07/08/17.
+ * Created by vinsfran on 07/08/2017.
  */
 public class SampleCustomerData {
-
-    public static List<Customer> getCustomers(){
+    public static List<Customer> getCustomers() {
         List<Customer> customers = new ArrayList<>();
 
         Customer customer1 = new Customer();

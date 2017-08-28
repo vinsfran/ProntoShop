@@ -1,11 +1,10 @@
 package py.com.fuentepy.prontoshop.core.events;
 
-import py.com.fuentepy.prontoshop.model.Customer;
+import py.com.fuentepy.prontoshop.models.Customer;
 
 /**
- * Created by vinsfran on 21/08/17.
+ * Created by vinsfran on 28/08/2017.
  */
-
 public class CustomerSelectedEvent {
     private final Customer selectedCustomer;
     private final boolean clearCustomer;

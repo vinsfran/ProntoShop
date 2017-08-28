@@ -9,11 +9,10 @@ import dagger.Provides;
 import py.com.fuentepy.prontoshop.core.ProntoShopApplication;
 
 /**
- * Created by vinsfran on 07/08/17.
+ * Created by vinsfran on 07/08/2017.
  */
 @Module
 public class AppModule {
-
     private final ProntoShopApplication app;
 
     public AppModule(ProntoShopApplication app) {
@@ -22,13 +21,13 @@ public class AppModule {
 
     @Provides
     @Singleton
-    public ProntoShopApplication provideApp(){
+    public ProntoShopApplication getApp() {
         return app;
     }
 
     @Provides
     @Singleton
-    public Context provideContext(){
+    public Context provideContext() {
         return app;
     }
 }

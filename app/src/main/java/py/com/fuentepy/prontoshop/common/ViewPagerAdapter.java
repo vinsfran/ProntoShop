@@ -4,16 +4,12 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
 
+import py.com.fuentepy.prontoshop.ui.customers.CustomerListFragment;
+import py.com.fuentepy.prontoshop.ui.products.ProductListFragment;
 import py.com.fuentepy.prontoshop.ui.checkout.CheckoutFragment;
-import py.com.fuentepy.prontoshop.ui.customerlist.CustomerListFragment;
-import py.com.fuentepy.prontoshop.ui.productlist.ProductListFragment;
 
-/**
- * Created by vinsfran on 14/08/17.
- */
+
 public class ViewPagerAdapter extends FragmentStatePagerAdapter {
-
-
     public ViewPagerAdapter(FragmentManager fm) {
         super(fm);
     }
@@ -33,6 +29,7 @@ public class ViewPagerAdapter extends FragmentStatePagerAdapter {
                 break;
             default:
                 selectedFragment = new ProductListFragment();
+                break;
         }
         return selectedFragment;
     }

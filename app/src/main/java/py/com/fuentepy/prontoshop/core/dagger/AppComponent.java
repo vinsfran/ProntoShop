@@ -1,17 +1,23 @@
 package py.com.fuentepy.prontoshop.core.dagger;
 
+import py.com.fuentepy.prontoshop.common.MainActivity;
+import py.com.fuentepy.prontoshop.data.sqlite.LineItemSQLiteRepository;
+import py.com.fuentepy.prontoshop.data.sqlite.SQLiteReport;
+import py.com.fuentepy.prontoshop.data.sqlite.TransactionSQLiteRepository;
+import py.com.fuentepy.prontoshop.ui.addCustomer.AddCustomerPresenter;
+import py.com.fuentepy.prontoshop.ui.addProduct.AddProductPresenter;
+import py.com.fuentepy.prontoshop.ui.checkout.CheckoutPresenter;
+import py.com.fuentepy.prontoshop.ui.customers.CustomerListPresenter;
+import py.com.fuentepy.prontoshop.ui.products.ProductListPresenter;
+import py.com.fuentepy.prontoshop.ui.transactions.TransactionListFragment;
+import py.com.fuentepy.prontoshop.ui.transactions.TransactionPresenter;
+
 import javax.inject.Singleton;
 
 import dagger.Component;
-import py.com.fuentepy.prontoshop.common.MainActivity;
-import py.com.fuentepy.prontoshop.common.ShoppingCart;
-import py.com.fuentepy.prontoshop.ui.checkout.CheckoutPresenter;
-import py.com.fuentepy.prontoshop.ui.customerlist.CustomerPresenter;
-import py.com.fuentepy.prontoshop.ui.productlist.ProductPresenter;
-import py.com.fuentepy.prontoshop.ui.transaction.TransactionPresenter;
 
 /**
- * Created by vinsfran on 07/08/17.
+ * Created by vinsfran on 07/08/2017.
  */
 @Singleton
 @Component(
@@ -23,10 +29,25 @@ import py.com.fuentepy.prontoshop.ui.transaction.TransactionPresenter;
         }
 )
 public interface AppComponent {
-    void inject(MainActivity activity);
-    void inject(ShoppingCart cart);
-    void inject(ProductPresenter presenter);
-    void inject(CustomerPresenter presenter);
+    void inject(ProductListPresenter presenter);
+
+    void inject(CustomerListPresenter presenter);
+
+    void inject(AddCustomerPresenter presenter);
+
+    void inject(CheckoutPresenter presenter);
+
+    void inject(AddProductPresenter presenter);
+
     void inject(TransactionPresenter presenter);
 
+    void inject(TransactionListFragment fragment);
+
+    void inject(MainActivity activity);
+
+    void inject(TransactionSQLiteRepository repository);
+
+    void inject(SQLiteReport report);
+
+    void inject(LineItemSQLiteRepository repository);
 }

@@ -1,20 +1,25 @@
 package py.com.fuentepy.prontoshop.core.events;
 
-import java.util.List;
-
-import py.com.fuentepy.prontoshop.model.LineItem;
+import java.math.BigDecimal;
 
 /**
- * Created by vinsfran on 21/08/17.
+ * Created by vinsfran on 28/08/2017.
  */
 public class UpdateToolbarEvent {
-    private final List<LineItem> mLineItems;
+    private final BigDecimal totalPrice;
+    private final int totalQty;
 
-    public UpdateToolbarEvent(List<LineItem> mLineItems) {
-        this.mLineItems = mLineItems;
+
+    public UpdateToolbarEvent(BigDecimal totalPrice, int totalQty) {
+        this.totalPrice = totalPrice;
+        this.totalQty = totalQty;
     }
 
-    public List<LineItem> getmLineItems() {
-        return mLineItems;
+    public BigDecimal getTotalPrice() {
+        return totalPrice;
+    }
+
+    public int getTotalQty() {
+        return totalQty;
     }
 }

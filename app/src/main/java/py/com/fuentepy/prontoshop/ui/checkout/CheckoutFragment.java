@@ -1,6 +1,8 @@
 package py.com.fuentepy.prontoshop.ui.checkout;
 
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
@@ -11,83 +13,247 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.RadioGroup;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import py.com.fuentepy.prontoshop.R;
+import py.com.fuentepy.prontoshop.core.ProntoShopApplication;
+import py.com.fuentepy.prontoshop.core.listeners.CartActionsListener;
+import py.com.fuentepy.prontoshop.models.LineItem;
+import py.com.fuentepy.prontoshop.util.Formatter;
+
+import org.greenrobot.eventbus.EventBus;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import py.com.fuentepy.prontoshop.R;
-import py.com.fuentepy.prontoshop.core.listeners.CarActionsListener;
-import py.com.fuentepy.prontoshop.model.LineItem;
+import butterknife.OnCheckedChanged;
+import butterknife.OnClick;
 
 /**
  * A simple {@link Fragment} subclass.
  */
-public class CheckoutFragment extends Fragment implements CarActionsListener {
+public class CheckoutFragment extends Fragment implements
+        CheckoutContract.View, CartActionsListener {
+
     private View mRootView;
     private CheckoutAdapter mAdapter;
+    private CheckoutContract.Actions mCartPresenter;
 
-    @BindView(R.id.checkout_list_recycler_view)
+
+    @BindView(R.id.cart_list_recyclerview)
     RecyclerView mRecyclerView;
     @BindView(R.id.empty_text)
     TextView mEmptyTextView;
     @BindView(R.id.clear_cart_button)
     Button mClearButton;
-    @BindView(R.id.checkout_cart_button)
+    @BindView(R.id.check_out_button)
     Button mCheckoutButton;
     @BindView(R.id.text_view_sub_total)
     TextView mSubTotalTextView;
-    @BindView(R.id.text_view_total)
+    @BindView(R.id.text_view_total_amount)
     TextView mTotalTextView;
-    @BindView(R.id.text_view_tax)
+    @BindView(R.id.text_view_tax_rate)
+    TextView mTotalTaxRate;
+    @BindView(R.id.text_view_tax_value)
     TextView mTotalTaxValue;
     @BindView(R.id.radio_group_payment_type)
     RadioGroup mRadioGroup;
 
+    private EventBus mBus;
 
     public CheckoutFragment() {
         // Required empty public constructor
     }
 
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        mRootView = inflater.inflate(R.layout.fragment_checkout, container, false);
+        mRootView = inflater.inflate(R.layout.fragment_shopping_cart, container, false);
         ButterKnife.bind(this, mRootView);
 
-        //setup Adapter
-        List<LineItem> tempLineItems = new ArrayList<>();
-        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getContext());
-        mAdapter = new CheckoutAdapter(tempLineItems, getActivity(), this);
+
+        List<LineItem> tempProducts = new ArrayList<>();
+        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getActivity());
+        mAdapter = new CheckoutAdapter(tempProducts, getContext(), this);
         mRecyclerView.setLayoutManager(layoutManager);
         mRecyclerView.setAdapter(mAdapter);
-        if (tempLineItems.size() < 1) {
-            showEmptyTextMessage();
-        } else {
-            hideEmptyTextMessage();
-        }
+
+        mBus = ProntoShopApplication.getInstance().getBus();
+
+        mCartPresenter = new CheckoutPresenter(this);
+
         return mRootView;
     }
 
-    private void hideEmptyTextMessage() {
-        mRecyclerView.setVisibility(View.VISIBLE);
-        mEmptyTextView.setVisibility(View.GONE);
-    }
-
-    private void showEmptyTextMessage() {
-        mRecyclerView.setVisibility(View.GONE);
-        mEmptyTextView.setVisibility(View.VISIBLE);
+    @Override
+    public void onResume() {
+        mCartPresenter.loadLineItems();
+        super.onResume();
+        if (mBus != null) {
+            try {
+                mBus.register(this);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
     }
 
     @Override
-    public void onItemDeletedProduct(LineItem item) {
+    public void onPause() {
+        super.onPause();
+        if (mBus != null) {
+            try {
+                mBus.unregister(this);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+    }
 
+    @OnCheckedChanged(R.id.button_cash)
+    void onCheckedCash(boolean checked) {
+        if (checked) {
+            mCartPresenter.setPaymentType(getString(R.string.payment_type_cash));
+            mCartPresenter.markAsPaid(false);
+        }
+    }
+
+    @OnCheckedChanged(R.id.button_card)
+    void onCheckedCard(boolean checked) {
+        if (checked) {
+            mCartPresenter.setPaymentType(getString(R.string.payment_type_card));
+            mCartPresenter.markAsPaid(true);
+        }
+    }
+
+    @OnCheckedChanged(R.id.button_paypal)
+    void onCheckedPaypal(boolean checked) {
+        if (checked) {
+            mCartPresenter.setPaymentType(getString(R.string.payment_type_paypal));
+            mCartPresenter.markAsPaid(true);
+        }
+    }
+
+
+    @OnClick(R.id.check_out_button)
+    public void onClickCheckoutButton(View view) {
+        mCartPresenter.onCheckoutButtonClicked();
+    }
+
+    @OnClick(R.id.clear_cart_button)
+    public void onClickClearCart(View view) {
+        mCartPresenter.onClearButtonClicked();
+    }
+
+    @Override
+    public void showLineItem(List<LineItem> lineItems) {
+        mAdapter.replaceData(lineItems);
+    }
+
+    @Override
+    public void showEmptyText() {
+        mEmptyTextView.setVisibility(View.VISIBLE);
+        mRecyclerView.setVisibility(View.GONE);
+    }
+
+    @Override
+    public void showCartTotals(double tax, double subtotal, double total) {
+        mTotalTextView.setText(Formatter.formatCurrency(total));
+        mSubTotalTextView.setText(Formatter.formatCurrency(subtotal));
+        mTotalTaxValue.setText(Formatter.formatCurrency(tax));
+    }
+
+
+    @Override
+    public void showConfirmCheckout() {
+        AlertDialog.Builder dialog = new AlertDialog.Builder(getContext());
+        LayoutInflater inflater = getActivity().getLayoutInflater();
+
+        View titleView = (View) inflater.inflate(R.layout.dialog_title, null);
+        TextView titleText = (TextView) titleView.findViewById(R.id.text_view_dialog_title);
+        titleText.setText("Complete Checkout?");
+        dialog.setCustomTitle(titleView);
+
+        dialog.setMessage("Are you ready to complete Checkout");
+        dialog.setNegativeButton("No", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss();
+            }
+        });
+        dialog.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                mCartPresenter.checkout();
+
+            }
+        });
+        dialog.show();
+
+    }
+
+    @Override
+    public void showConfirmClearCart() {
+        AlertDialog.Builder dialog = new AlertDialog.Builder(getContext());
+        LayoutInflater inflater = getActivity().getLayoutInflater();
+
+        View titleView = (View) inflater.inflate(R.layout.dialog_title, null);
+        TextView titleText = (TextView) titleView.findViewById(R.id.text_view_dialog_title);
+        titleText.setText("Clear Shopping Cart?");
+        dialog.setCustomTitle(titleView);
+
+        dialog.setMessage("Are you ready to clear all items from shopping checkout?");
+        dialog.setNegativeButton("No", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss();
+            }
+        });
+        dialog.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                mCartPresenter.clearShoppingCart();
+            }
+        });
+        dialog.show();
+
+    }
+
+    @Override
+    public void hideEmptyText() {
+        mEmptyTextView.setVisibility(View.GONE);
+        mRecyclerView.setVisibility(View.VISIBLE);
+
+    }
+
+
+    @Override
+    public void showMessage(String message) {
+        showToastMessage(message);
+    }
+
+
+    @Override
+    public void onItemDeleted(LineItem item) {
+        mCartPresenter.onDeleteItemButtonClicked(item);
     }
 
     @Override
     public void onItemQtyChange(LineItem item, int qty) {
+        mCartPresenter.onItemQuantityChanged(item, qty);
+    }
+
+    private void showToastMessage(final String message) {
+        getActivity().runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                Toast.makeText(getActivity(), message, Toast.LENGTH_SHORT).show();
+            }
+        });
 
     }
 }

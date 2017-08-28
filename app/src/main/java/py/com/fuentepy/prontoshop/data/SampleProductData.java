@@ -3,10 +3,10 @@ package py.com.fuentepy.prontoshop.data;
 import java.util.ArrayList;
 import java.util.List;
 
-import py.com.fuentepy.prontoshop.model.Product;
+import py.com.fuentepy.prontoshop.models.Product;
 
 /**
- * Created by vinsfran on 22/08/17.
+ * Created by vinsfran on 22/08/2017.
  */
 public class SampleProductData {
     public static List<Product> getSampleProducts(){
@@ -111,3 +111,4 @@ public class SampleProductData {
         return products;
     }
 }
+
