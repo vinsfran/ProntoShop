@@ -22,9 +22,12 @@ import static android.R.attr.id;
  */
 public class CheckoutPresenter implements CheckoutContract.Actions, OnDatabaseOperationCompleteListener {
     private final CheckoutContract.View mView;
-    @Inject TransactionContract.Repository mTransactionRepository;
-    @Inject CheckoutContract.Repository mLineItemRepository;
-    @Inject Context mContext;
+    @Inject
+    TransactionContract.Repository mTransactionRepository;
+    @Inject
+    CheckoutContract.Repository mLineItemRepository;
+    @Inject
+    Context mContext;
     private long transactionId = -1;
     private final static String LOG_TAG = CheckoutPresenter.class.getSimpleName();
     private final static boolean DEBUG = true;
@@ -33,7 +36,8 @@ public class CheckoutPresenter implements CheckoutContract.Actions, OnDatabaseOp
     private boolean paid = false;
 
 
-    @Inject ShoppingCart mCart;
+    @Inject
+    ShoppingCart mCart;
 
     public CheckoutPresenter(CheckoutContract.View cartView) {
         this.mView = cartView;
@@ -46,10 +50,10 @@ public class CheckoutPresenter implements CheckoutContract.Actions, OnDatabaseOp
     public void loadLineItems() {
         List<LineItem> availableProducts = mCart.getShoppingCart();
 
-        if (availableProducts != null && availableProducts.size() > 0){
+        if (availableProducts != null && availableProducts.size() > 0) {
             mView.hideEmptyText();
             mView.showLineItem(availableProducts);
-        }else {
+        } else {
             mView.showEmptyText();
         }
         double subTotal = mCart.getSubTotalAmount();
@@ -59,8 +63,6 @@ public class CheckoutPresenter implements CheckoutContract.Actions, OnDatabaseOp
         mView.showCartTotals(tax, subTotal, totalAmount);
 
     }
-
-
 
 
     @Override
@@ -78,11 +80,11 @@ public class CheckoutPresenter implements CheckoutContract.Actions, OnDatabaseOp
     @Override
     public void checkout() {
         //Ensure a customer is selected
-        if (mCart.getShoppingCart() == null || mCart.getShoppingCart().size() == 0){
+        if (mCart.getShoppingCart() == null || mCart.getShoppingCart().size() == 0) {
             mView.showMessage("Cart is empty");
             return;
         }
-        if (mCart.getSelectedCustomer() == null || mCart.getSelectedCustomer().getId() == 0){
+        if (mCart.getSelectedCustomer() == null || mCart.getSelectedCustomer().getId() == 0) {
             mView.showMessage("No Customer selected");
             return;
         }
@@ -97,7 +99,7 @@ public class CheckoutPresenter implements CheckoutContract.Actions, OnDatabaseOp
         transaction.setLineItems(mCart.getShoppingCart());
         transaction.setPaid(paid);
         new SaveTransactionAsync().execute(transaction);
-      //  transactionId =  mTransactionRepository.saveTransaction(transaction, this);
+        //  transactionId =  mTransactionRepository.saveTransaction(transaction, this);
 
     }
 
@@ -114,7 +116,7 @@ public class CheckoutPresenter implements CheckoutContract.Actions, OnDatabaseOp
 
     @Override
     public void setPaymentType(String paymentType) {
-        if (DEBUG){
+        if (DEBUG) {
             Log.d(LOG_TAG, "Set Payment Type: " + paymentType);
         }
         selectedPaymentType = paymentType;
@@ -137,7 +139,6 @@ public class CheckoutPresenter implements CheckoutContract.Actions, OnDatabaseOp
     }
 
 
-
     @Override
     public void onSQLOperationFailed(String error) {
         mView.showMessage("Error: " + error);
@@ -148,7 +149,7 @@ public class CheckoutPresenter implements CheckoutContract.Actions, OnDatabaseOp
         mView.showMessage(message);
     }
 
-    public class SaveTransactionAsync extends AsyncTask<SalesTransaction, Void, String>{
+    public class SaveTransactionAsync extends AsyncTask<SalesTransaction, Void, String> {
 
         @Override
         protected String doInBackground(SalesTransaction... params) {
@@ -165,8 +166,8 @@ public class CheckoutPresenter implements CheckoutContract.Actions, OnDatabaseOp
                     result[0] = message;
                 }
             });
-            if (id > -1){
-                for (LineItem lineItem: transaction.getLineItems()){
+            if (id > -1) {
+                for (LineItem lineItem : transaction.getLineItems()) {
                     lineItem.setTransactionId(transactionId);
                     mLineItemRepository.saveLineItem(lineItem, CheckoutPresenter.this);
                 }

@@ -33,16 +33,19 @@ import butterknife.ButterKnife;
  * A simple {@link Fragment} subclass.
  */
 public class CustomerListFragment extends Fragment implements
-        CustomerListContract.View, OnCustomerSelectedListener{
+        CustomerListContract.View, OnCustomerSelectedListener {
 
     private View mRootView;
     private CustomerListAdapter mAdapter;
     private CustomerListContract.Actions mCustomerPresenter;
 
 
-    @BindView(R.id.customer_recycler_view) RecyclerView mRecyclerView;
-    @BindView(R.id.empty_text) TextView mEmptyTextView;
-    @BindView(R.id.fab ) FloatingActionButton mFab;
+    @BindView(R.id.customer_recycler_view)
+    RecyclerView mRecyclerView;
+    @BindView(R.id.empty_text)
+    TextView mEmptyTextView;
+    @BindView(R.id.fab)
+    FloatingActionButton mFab;
 
 
     public CustomerListFragment() {
@@ -72,7 +75,7 @@ public class CustomerListFragment extends Fragment implements
         //setup RecyclerView
         List<Customer> tempCustomers = new ArrayList<>();
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getContext());
-        mAdapter = new CustomerListAdapter(tempCustomers, this, getContext() );
+        mAdapter = new CustomerListAdapter(tempCustomers, this, getContext());
         mRecyclerView.setLayoutManager(layoutManager);
         mRecyclerView.setAdapter(mAdapter);
         return mRootView;
@@ -141,7 +144,7 @@ public class CustomerListFragment extends Fragment implements
     }
 
 
-    private void showToastMessage(String message){
+    private void showToastMessage(String message) {
         Snackbar.make(mRootView.getRootView(), message, Snackbar.LENGTH_SHORT).show();
     }
 
@@ -156,7 +159,7 @@ public class CustomerListFragment extends Fragment implements
     }
 
     private void showCustomerContextMenu(final Customer clickedCustomer) {
-        final  String[] sortOptions = { getString(R.string.edit), getString(R.string.delete), getString(R.string.select_customer)};
+        final String[] sortOptions = {getString(R.string.edit), getString(R.string.delete), getString(R.string.select_customer)};
 
         AlertDialog.Builder alertDialog = new AlertDialog.Builder(getContext());
         LayoutInflater inflater = getActivity().getLayoutInflater();
@@ -164,8 +167,8 @@ public class CustomerListFragment extends Fragment implements
         View convertView = (View) inflater.inflate(R.layout.dialog_list, null);
         alertDialog.setView(convertView);
 
-        View titleView = (View)inflater.inflate(R.layout.dialog_title, null);
-        TextView titleText = (TextView)titleView.findViewById(R.id.text_view_dialog_title);
+        View titleView = (View) inflater.inflate(R.layout.dialog_title, null);
+        TextView titleText = (TextView) titleView.findViewById(R.id.text_view_dialog_title);
         if (clickedCustomer.getCustomerName() != null) {
             titleText.setText(clickedCustomer.getCustomerName());
         }
@@ -173,7 +176,7 @@ public class CustomerListFragment extends Fragment implements
 
         ListView dialogList = (ListView) convertView.findViewById(R.id.dialog_listview);
         ArrayAdapter<String> adapter = new ArrayAdapter<String>
-                (getActivity(),android.R.layout.simple_list_item_1, sortOptions);
+                (getActivity(), android.R.layout.simple_list_item_1, sortOptions);
         dialogList.setAdapter(adapter);
 
         alertDialog.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
@@ -188,7 +191,7 @@ public class CustomerListFragment extends Fragment implements
         dialogList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                switch (position){
+                switch (position) {
                     case 0:
                         mCustomerPresenter.onEditCustomerButtonClicked(clickedCustomer);
                         dialog.dismiss();

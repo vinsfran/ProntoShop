@@ -16,14 +16,16 @@ import py.com.fuentepy.prontoshop.common.ShoppingCart;
 @Module
 public class ShoppingCartModule {
 
-    @Provides @Singleton
-    SharedPreferences providesSharedPreference(Context context){
+    @Provides
+    @Singleton
+    SharedPreferences providesSharedPreference(Context context) {
         return PreferenceManager.getDefaultSharedPreferences(context);
     }
 
-    @Provides @Singleton
-    ShoppingCart providesShoppingCart(SharedPreferences preferences){
-        return  new ShoppingCart(preferences);
+    @Provides
+    @Singleton
+    ShoppingCart providesShoppingCart(SharedPreferences preferences) {
+        return new ShoppingCart(preferences);
     }
 }
 

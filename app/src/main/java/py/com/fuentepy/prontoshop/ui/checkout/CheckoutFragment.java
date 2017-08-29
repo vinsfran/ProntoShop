@@ -41,7 +41,6 @@ public class CheckoutFragment extends Fragment implements
     private CheckoutAdapter mAdapter;
     private CheckoutContract.Actions mCartPresenter;
 
-
     @BindView(R.id.cart_list_recyclerview)
     RecyclerView mRecyclerView;
     @BindView(R.id.empty_text)
@@ -93,13 +92,12 @@ public class CheckoutFragment extends Fragment implements
     public void onResume() {
         mCartPresenter.loadLineItems();
         super.onResume();
-        if (mBus != null) {
-            try {
-                mBus.register(this);
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
+        try {
+            mBus.register(this);
+        } catch (Exception e) {
+            e.printStackTrace();
         }
+
     }
 
     @Override

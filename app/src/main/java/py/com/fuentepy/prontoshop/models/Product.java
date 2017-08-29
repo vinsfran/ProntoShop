@@ -35,7 +35,6 @@ public class Product {
         this.categoryName = product.getCategoryName();
         this.dateAdded = product.getDateAdded();
         this.dateOfLastTransaction = product.getDateOfLastTransaction();
-
     }
 
 

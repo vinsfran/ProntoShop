@@ -65,5 +65,4 @@ public class ProductListContract {
 
         List<Category> getAllCategories();
     }
-
 }

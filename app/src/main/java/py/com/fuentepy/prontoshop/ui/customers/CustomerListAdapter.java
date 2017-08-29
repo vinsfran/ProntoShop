@@ -13,6 +13,7 @@ import android.widget.TextView;
 import py.com.fuentepy.prontoshop.R;
 import py.com.fuentepy.prontoshop.core.listeners.OnCustomerSelectedListener;
 import py.com.fuentepy.prontoshop.models.Customer;
+
 import com.squareup.picasso.Picasso;
 
 import java.util.List;
@@ -33,7 +34,7 @@ public class CustomerListAdapter extends RecyclerView.Adapter<CustomerListAdapte
     private boolean shouldHighLightSelectedRow = false;
     private int selectedPosition = 0;
 
-    public CustomerListAdapter(List<Customer> attendants, OnCustomerSelectedListener listener, Context context){
+    public CustomerListAdapter(List<Customer> attendants, OnCustomerSelectedListener listener, Context context) {
         mCustomerList = attendants;
         mListener = listener;
         mContext = context;
@@ -54,7 +55,7 @@ public class CustomerListAdapter extends RecyclerView.Adapter<CustomerListAdapte
 
         holder.customerName.setText(selectedCustomer.getCustomerName());
         holder.customerEmail.setText(selectedCustomer.getEmailAddress());
-        if (selectedCustomer.getProfileImagePath().isEmpty()){
+        if (selectedCustomer.getProfileImagePath().isEmpty()) {
             selectedCustomer.setProfileImagePath("empty");
         }
         Picasso.with(mContext)
@@ -62,13 +63,13 @@ public class CustomerListAdapter extends RecyclerView.Adapter<CustomerListAdapte
                 .fit()
                 .placeholder(R.drawable.profile_icon)
                 .into(holder.customerHeadShot);
-        if (shouldHighLightSelectedRow){
-            if (selectedPosition == position){
+        if (shouldHighLightSelectedRow) {
+            if (selectedPosition == position) {
                 holder.itemView.setBackgroundColor(ContextCompat.getColor(mContext, R.color.primary_light));
-            }else {
+            } else {
                 holder.itemView.setBackgroundColor(Color.TRANSPARENT);
             }
-        }else {
+        } else {
             holder.itemView.setBackgroundColor(Color.TRANSPARENT);
         }
     }
@@ -82,17 +83,20 @@ public class CustomerListAdapter extends RecyclerView.Adapter<CustomerListAdapte
         }
     }
 
-    public void replaceData(List<Customer> customers){
+    public void replaceData(List<Customer> customers) {
         mCustomerList = checkNotNull(customers);
         shouldHighLightSelectedRow = false;
         notifyDataSetChanged();
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener, View.OnLongClickListener{
+    public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener, View.OnLongClickListener {
 
-        @BindView(R.id.image_view_customer_head_shot)ImageView customerHeadShot;
-        @BindView(R.id.text_view_customers_name) TextView customerName;
-        @BindView(R.id.text_view_customers_email) TextView customerEmail;
+        @BindView(R.id.image_view_customer_head_shot)
+        ImageView customerHeadShot;
+        @BindView(R.id.text_view_customers_name)
+        TextView customerName;
+        @BindView(R.id.text_view_customers_email)
+        TextView customerEmail;
 
 
         public ViewHolder(View itemView) {
@@ -119,11 +123,5 @@ public class CustomerListAdapter extends RecyclerView.Adapter<CustomerListAdapte
             return true;
         }
     }
-
-
-
-
-
-
 
 }

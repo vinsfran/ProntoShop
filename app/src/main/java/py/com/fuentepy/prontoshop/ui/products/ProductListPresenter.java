@@ -30,7 +30,7 @@ public class ProductListPresenter implements ProductListContract.Actions, OnData
     public ProductListPresenter(ProductListContract.View mView) {
         this.mView = mView;
         ProntoShopApplication.getInstance().getAppComponent().inject(this);
-        mBus.register(this);
+//        mBus.register(this);
     }
 
 
@@ -40,11 +40,9 @@ public class ProductListPresenter implements ProductListContract.Actions, OnData
         if (availableProducts != null && availableProducts.size() > 0) {
             mView.hideEmptyText();
             mView.showProducts(availableProducts);
-
         } else {
             mView.showEmptyText();
         }
-
     }
 
     @Override
@@ -95,7 +93,6 @@ public class ProductListPresenter implements ProductListContract.Actions, OnData
     public void onProductListChanged(ProductListChangedEvent event) {
         loadProducts();
     }
-
 
     @Override
     public void onGoogleSearchButtonClicked(Product product) {

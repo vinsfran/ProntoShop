@@ -25,7 +25,9 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-
+/**
+ * Created by vinsfran on 28/08/2017.
+ */
 public class AddProductDialogFragment extends DialogFragment implements AddProductContract.View {
 
     private AddProductContract.Action mPresenter;
@@ -45,7 +47,6 @@ public class AddProductDialogFragment extends DialogFragment implements AddProdu
     AutoCompleteTextView mCategoryAutoComplete;
     @BindView(R.id.edit_text_product_image_path)
     EditText mImagePathEditText;
-
 
     public AddProductDialogFragment() {
         // Required empty public constructor
@@ -104,8 +105,6 @@ public class AddProductDialogFragment extends DialogFragment implements AddProdu
             });
 
         }
-
-
         return dialogFragment.create();
     }
 
@@ -196,7 +195,6 @@ public class AddProductDialogFragment extends DialogFragment implements AddProdu
         } catch (ParseException e) {
             e.printStackTrace();
         }
-
         mPresenter.onAddProductButtonClick(product);
     }
 }

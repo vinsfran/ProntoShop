@@ -18,11 +18,12 @@ import javax.inject.Inject;
  */
 public class CustomerListPresenter implements CustomerListContract.Actions, OnDatabaseOperationCompleteListener {
     private final CustomerListContract.View mView;
-    @Inject CustomerListContract.Repository mRepository;
-    @Inject ShoppingCart mCart;
+    @Inject
+    CustomerListContract.Repository mRepository;
+    @Inject
+    ShoppingCart mCart;
     @Inject
     EventBus mBus;
-
 
     public CustomerListPresenter(CustomerListContract.View customerListView) {
         this.mView = customerListView;
@@ -33,13 +34,12 @@ public class CustomerListPresenter implements CustomerListContract.Actions, OnDa
     @Override
     public void loadCustomers() {
         List<Customer> availableCustomers = mRepository.getAllCustomers();
-        if (availableCustomers != null && availableCustomers.size() > 0){
+        if (availableCustomers != null && availableCustomers.size() > 0) {
             mView.hideEmptyText();
             mView.showCustomers(availableCustomers);
-        }else {
+        } else {
             mView.showEmptyText();
         }
-
     }
 
     @Override
@@ -80,7 +80,7 @@ public class CustomerListPresenter implements CustomerListContract.Actions, OnDa
     }
 
     @Subscribe
-    public void onCustomerListChanged(CustomerListChangedEvent event){
+    public void onCustomerListChanged(CustomerListChangedEvent event) {
         loadCustomers();
     }
 

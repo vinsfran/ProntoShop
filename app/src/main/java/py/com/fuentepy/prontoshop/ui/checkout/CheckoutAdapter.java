@@ -161,8 +161,6 @@ public class CheckoutAdapter extends RecyclerView.Adapter<CheckoutAdapter.ViewHo
         });
         dialog.show();
 
-
     }
-
 
 }

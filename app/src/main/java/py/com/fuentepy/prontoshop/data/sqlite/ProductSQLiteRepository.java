@@ -138,7 +138,7 @@ public class ProductSQLiteRepository implements ProductListContract.Repository{
             values.put(Constants.COLUMN_PRICE, product.getSalePrice());
             values.put(Constants.COLUMN_PURCHASE_PRICE, product.getPurchasePrice());
             values.put(Constants.COLUMN_IMAGE_PATH, product.getImagePath());
-            values.put(Constants.COLUMN_CATEGORY_ID, product.getCategoryId());
+            values.put(Constants.COLUMN_CATEGORY_ID, createOrGetCategoryId(product.getCategoryName(), listener));
             values.put(Constants.COLUMN_CATEGORY_NAME, product.getCategoryName());
             values.put(Constants.COLUMN_LAST_UPDATED, System.currentTimeMillis());
 

@@ -22,7 +22,6 @@ public class ProntoShopApplication extends Application {
         return bus;
     }
 
-
     private SharedPreferences sharedPreferences;
 
     private static ProntoShopApplication instance = new ProntoShopApplication();
@@ -35,7 +34,7 @@ public class ProntoShopApplication extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
-        instance.bus = new EventBus();
+        instance.bus = EventBus.getDefault();
         getAppComponent();
         initDefaultProducts();
     }

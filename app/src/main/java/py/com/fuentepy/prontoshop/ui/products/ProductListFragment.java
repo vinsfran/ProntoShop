@@ -43,10 +43,12 @@ public class ProductListFragment extends Fragment
     private ProductListContract.Actions mProductPresenter;
     private AddProductDialogFragment mAddProductDialogFragment;
 
-    @BindView(R.id.product_recycler_view) RecyclerView mRecyclerView;
-    @BindView(R.id.empty_text) TextView mEmptyTextView;
-    @BindView(R.id.fab) FloatingActionButton mFab;
-
+    @BindView(R.id.product_recycler_view)
+    RecyclerView mRecyclerView;
+    @BindView(R.id.empty_text)
+    TextView mEmptyTextView;
+    @BindView(R.id.fab)
+    FloatingActionButton mFab;
 
     public ProductListFragment() {
         // Required empty public constructor
@@ -87,6 +89,7 @@ public class ProductListFragment extends Fragment
     @Override
     public void showProducts(List<Product> products) {
         mAdapter.replaceData(products);
+
     }
 
 
@@ -94,6 +97,7 @@ public class ProductListFragment extends Fragment
     public void showAddProductForm() {
         mAddProductDialogFragment = AddProductDialogFragment.newInstance(0);
         mAddProductDialogFragment.show(getActivity().getFragmentManager(), "Dialog");
+
     }
 
     @Override
@@ -107,8 +111,8 @@ public class ProductListFragment extends Fragment
         AlertDialog.Builder alertDialog = new AlertDialog.Builder(getContext());
         LayoutInflater inflater = getActivity().getLayoutInflater();
 
-        View titleView = (View)inflater.inflate(R.layout.dialog_title, null);
-        TextView titleText = (TextView)titleView.findViewById(R.id.text_view_dialog_title);
+        View titleView = (View) inflater.inflate(R.layout.dialog_title, null);
+        TextView titleText = (TextView) titleView.findViewById(R.id.text_view_dialog_title);
         titleText.setText("Delete Product?");
         alertDialog.setCustomTitle(titleView);
 
@@ -154,7 +158,7 @@ public class ProductListFragment extends Fragment
     }
 
 
-    private void showToastMessage(String message){
+    private void showToastMessage(String message) {
         Snackbar.make(mRootView.getRootView(), message, Snackbar.LENGTH_SHORT).show();
     }
 
@@ -169,7 +173,7 @@ public class ProductListFragment extends Fragment
     }
 
     private void showProductContextMenu(final Product clickedProduct) {
-        final  String[] sortOptions = { getString(R.string.edit), getString(R.string.delete), getString(R.string.add_to_cart), getString(R.string.google_search)};
+        final String[] sortOptions = {getString(R.string.edit), getString(R.string.delete), getString(R.string.add_to_cart), getString(R.string.google_search)};
 
         AlertDialog.Builder alertDialog = new AlertDialog.Builder(getContext());
         LayoutInflater inflater = getActivity().getLayoutInflater();
@@ -177,8 +181,8 @@ public class ProductListFragment extends Fragment
         View convertView = (View) inflater.inflate(R.layout.dialog_list, null);
         alertDialog.setView(convertView);
 
-        View titleView = (View)inflater.inflate(R.layout.dialog_title, null);
-        TextView titleText = (TextView)titleView.findViewById(R.id.text_view_dialog_title);
+        View titleView = (View) inflater.inflate(R.layout.dialog_title, null);
+        TextView titleText = (TextView) titleView.findViewById(R.id.text_view_dialog_title);
         if (clickedProduct.getProductName() != null) {
             titleText.setText(clickedProduct.getProductName());
         }
@@ -186,7 +190,7 @@ public class ProductListFragment extends Fragment
 
         ListView dialogList = (ListView) convertView.findViewById(R.id.dialog_listview);
         ArrayAdapter<String> adapter = new ArrayAdapter<String>
-                (getActivity(),android.R.layout.simple_list_item_1, sortOptions);
+                (getActivity(), android.R.layout.simple_list_item_1, sortOptions);
         dialogList.setAdapter(adapter);
 
         alertDialog.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
@@ -201,7 +205,7 @@ public class ProductListFragment extends Fragment
         dialogList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                switch (position){
+                switch (position) {
                     case 0:
                         mProductPresenter.onEditProductButtonClicked(clickedProduct);
                         dialog.dismiss();

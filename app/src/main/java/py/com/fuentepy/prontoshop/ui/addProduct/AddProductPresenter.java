@@ -28,10 +28,12 @@ public class AddProductPresenter implements AddProductContract.Action, OnDatabas
     public AddProductPresenter(AddProductContract.View view) {
         mView = view;
         ProntoShopApplication.getInstance().getAppComponent().inject(this);
+//        mBus.register(this);
     }
 
     @Override
     public void onAddProductButtonClick(Product product) {
+
         if (productId > 0) {
             product.setId(productId);
             updatedProduct(product);
