@@ -54,7 +54,6 @@ public class AddCustomerPresenter implements AddCustomerContract.Action, OnDatab
         } else {
             mRepository.addCustomer(customer, this);
         }
-
     }
 
     @Override

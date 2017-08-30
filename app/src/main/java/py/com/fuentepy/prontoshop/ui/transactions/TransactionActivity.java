@@ -22,8 +22,6 @@ public class TransactionActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayShowHomeEnabled(true);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         openFragment(new TransactionListFragment(), "Transactions");
-
-
     }
 
     private void openFragment(Fragment fragment, String screenTitle) {

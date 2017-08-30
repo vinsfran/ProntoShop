@@ -55,7 +55,6 @@ public class CustomerListFragment extends Fragment implements
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
     }
 
     @Override
@@ -96,7 +95,6 @@ public class CustomerListFragment extends Fragment implements
     public void showAddCustomerForm() {
         AddCustomerDialogFragment mAddCustomerFragment = new AddCustomerDialogFragment();
         mAddCustomerFragment.show(getActivity().getFragmentManager(), "Dialog");
-
     }
 
     @Override

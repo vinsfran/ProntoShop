@@ -24,35 +24,41 @@ import butterknife.ButterKnife;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class AddCustomerDialogFragment extends DialogFragment implements AddCustomerContract.View{
+public class AddCustomerDialogFragment extends DialogFragment implements AddCustomerContract.View {
 
     private AddCustomerContract.Action mPresenter;
     private boolean mInEditMode = false;
 
-    @BindView(R.id.edit_text_customer_name)  EditText mNameEditText;
-    @BindView(R.id.edit_text_customer_email) EditText mEmailEditText;
-    @BindView(R.id.edit_text_customer_image_path) EditText mImagePathEditText;
-    @BindView(R.id.edit_text_customer_phone) EditText mPhoneEditText;
-    @BindView(R.id.edit_text_customer_street_address) EditText mStreet1EditText;
-    @BindView(R.id.edit_text_customer_street_address_2) EditText mStreet2EditText;
-    @BindView(R.id.edit_text_customer_city) EditText mCityEditText;
-    @BindView(R.id.edit_text_customer_state) EditText mStateEditText;
-    @BindView(R.id.edit_text_customer_zip_code) EditText mZipEditText;
-    @BindView(R.id.edit_text_customer_note) EditText mCustomerNote;
+    @BindView(R.id.edit_text_customer_name)
+    EditText mNameEditText;
+    @BindView(R.id.edit_text_customer_email)
+    EditText mEmailEditText;
+    @BindView(R.id.edit_text_customer_image_path)
+    EditText mImagePathEditText;
+    @BindView(R.id.edit_text_customer_phone)
+    EditText mPhoneEditText;
+    @BindView(R.id.edit_text_customer_street_address)
+    EditText mStreet1EditText;
+    @BindView(R.id.edit_text_customer_street_address_2)
+    EditText mStreet2EditText;
+    @BindView(R.id.edit_text_customer_city)
+    EditText mCityEditText;
+    @BindView(R.id.edit_text_customer_state)
+    EditText mStateEditText;
+    @BindView(R.id.edit_text_customer_zip_code)
+    EditText mZipEditText;
+    @BindView(R.id.edit_text_customer_note)
+    EditText mCustomerNote;
 
-
-    public static AddCustomerDialogFragment newInstance(long id){
+    public static AddCustomerDialogFragment newInstance(long id) {
         AddCustomerDialogFragment fragment = new AddCustomerDialogFragment();
-        if (id > 0){
+        if (id > 0) {
             Bundle args = new Bundle();
             args.putLong(Constants.COLUMN_ID, id);
             fragment.setArguments(args);
         }
         return fragment;
     }
-
-
-
 
     public AddCustomerDialogFragment() {
         // Required empty public constructor
@@ -67,19 +73,19 @@ public class AddCustomerDialogFragment extends DialogFragment implements AddCust
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         AlertDialog.Builder dialogFragment = new AlertDialog.Builder(getActivity());
-        if (savedInstanceState == null){
+        if (savedInstanceState == null) {
             LayoutInflater inflater = getActivity().getLayoutInflater();
 
             View rootView = inflater.inflate(R.layout.fragment_add_customer, null);
             dialogFragment.setView(rootView);
             ButterKnife.bind(this, rootView);
 
-            if (getArguments() != null && getArguments().containsKey(Constants.COLUMN_ID)){
+            if (getArguments() != null && getArguments().containsKey(Constants.COLUMN_ID)) {
                 mPresenter.checkStatus(getArguments().getLong(Constants.COLUMN_ID));
             }
 
             View titleView = inflater.inflate(R.layout.dialog_title, null);
-            TextView titleText = (TextView)titleView.findViewById(R.id.text_view_dialog_title);
+            TextView titleText = (TextView) titleView.findViewById(R.id.text_view_dialog_title);
             titleText.setText(mInEditMode ? "Edit Customer" : "Add Customer");
             dialogFragment.setCustomTitle(titleView);
 
@@ -132,15 +138,13 @@ public class AddCustomerDialogFragment extends DialogFragment implements AddCust
 
 
     private boolean validateInputs() {
-        if (mNameEditText.getText().toString().isEmpty())
-        {
+        if (mNameEditText.getText().toString().isEmpty()) {
             mNameEditText.setError(getString(R.string.name_is_required));
             mNameEditText.requestFocus();
             return false;
         }
 
-        if (mEmailEditText.getText().toString().isEmpty())
-        {
+        if (mEmailEditText.getText().toString().isEmpty()) {
             mEmailEditText.setError(getString(R.string.email_is_required));
             mEmailEditText.requestFocus();
             return false;
@@ -152,10 +156,10 @@ public class AddCustomerDialogFragment extends DialogFragment implements AddCust
     @Override
     public void onStart() {
         super.onStart();
-        AlertDialog d = (AlertDialog)getDialog();
+        AlertDialog d = (AlertDialog) getDialog();
 
-        if (d != null){
-            Button positiveButton = (Button)d.getButton(Dialog.BUTTON_POSITIVE);
+        if (d != null) {
+            Button positiveButton = (Button) d.getButton(Dialog.BUTTON_POSITIVE);
             positiveButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -164,8 +168,9 @@ public class AddCustomerDialogFragment extends DialogFragment implements AddCust
                         saveCustomer();
                         readyToCloseDialog = true;
                     }
-                    if (readyToCloseDialog)
+                    if (readyToCloseDialog) {
                         dismiss();
+                    }
                 }
             });
         }
@@ -184,7 +189,6 @@ public class AddCustomerDialogFragment extends DialogFragment implements AddCust
         customer.setPostalCode(mZipEditText.getText().toString());
         customer.setNote(mCustomerNote.getText().toString());
         mPresenter.saveCustomer(customer);
-
     }
 
 }
